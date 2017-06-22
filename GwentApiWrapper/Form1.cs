@@ -41,17 +41,20 @@ namespace GwentApiWrapper
                 //Get card data
                 HttpResponseMessage response = await client.GetAsync(card.Href);
                 var stringData = await response.Content.ReadAsStringAsync();
-                MessageBox.Show(stringData);
+                var gwentCardData = Newtonsoft.Json.JsonConvert.DeserializeObject<GwentCardData>(stringData);
+                //MessageBox.Show(stringData);
 
                 //Get variation data for artwork
-                var gwentCardData = Newtonsoft.Json.JsonConvert.DeserializeObject<GwentCardData>(stringData);
                 HttpResponseMessage cardResponse = await client.GetAsync(baseApi + cardEndpoint + $"/{gwentCardData.UUID}" + $"/variations");
                 var cardStringData = await cardResponse.Content.ReadAsStringAsync();
                 MessageBox.Show(cardStringData);
 
                 this.Invoke(new Action(() =>
                 {
-                    //pictureBox2.Image = bmp;
+                    lblName.Text = gwentCardData.Name;
+                    lblFaction.Text = gwentCardData.Faction.Name;
+                    lblFlavor.Text = gwentCardData.Flavor;
+                    lblGroup.Text = gwentCardData.Group.Name;
                 }));
             }
         }
