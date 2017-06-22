@@ -1,5 +1,8 @@
-﻿namespace GwentApiWrapper
+﻿using Newtonsoft.Json;
+
+namespace GwentApiWrapper
 {
+    [JsonArrayAttribute]
     public class Variation
     {
         public string Availability { get; set; }

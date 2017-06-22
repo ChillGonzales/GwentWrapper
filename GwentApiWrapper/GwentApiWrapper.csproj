@@ -61,6 +61,7 @@
     <Compile Include="Models\Card Submodels\Group.cs" />
     <Compile Include="Models\Card Submodels\Rarity.cs" />
     <Compile Include="Models\GwentCard.cs" />
+    <Compile Include="Models\GwentCardData.cs" />
     <Compile Include="Models\GwentCardLink.cs" />
     <Compile Include="Models\GwentReply.cs" />
     <Compile Include="Program.cs" />

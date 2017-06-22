@@ -4,32 +4,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GwentApiWrapper
+namespace GwentApiWrapper.Models
 {
     public class GwentCard
     {
-        public List<KeyValuePair<string, string>> Categories { get; set; }
-        public Faction Faction { get; set; }
-        public string Flavor { get; set; }
-        public Group Group { get; set; }
-        public string Href { get; set; }
-        public string Info { get; set; }
-        public string Name { get; set; }
-        public string[] Positions { get; set; }
-        public int Strength { get; set; }
-        public string UUID { get; set; }
-        public Variation Variations { get; set; }
-        public string GetDisplayString {
+        public GwentCardData CardData { get; private set; }
+        public Category Category { get; private set; }
+        public Variation Variations { get; private set; }
+
+        public GwentCard(GwentCardData data)
+        {
+            CardData = data;
+            Category = new Category();
+            foreach (var item in CardData.Categories)
+            {
+                if (item.Key == "href")
+                {
+                    Category.Href = item.Value;
+                }
+                else if (item.Key == "name")
+                {
+                    Category.Name = item.Value;
+                }
+            }
+            Variations = new Variation();
+            foreach (var item in CardData.Variations)
+            {
+                if (item.Key == "href")
+                {
+                    Variations.Href = item.Value;
+                }
+                else if (item.Key == "availability")
+                {
+                    Variations.Availability = item.Value;
+                }
+                else if (item.Key == "rarity")
+                {
+                    Variations.Rarity = new Rarity() { Href = item.Value };
+                }
+            }
+        }
+        public string GetDisplayString
+        {
             get
             {
-                return $"Name: {Name}\n" + 
-                       $"Category: {Categories}\n" +
-                       $"Faction: {Faction.Name}\n" + 
-                       $"Flavor: {Flavor}\n" + 
-                       $"Group: {Group.Name}\n" + 
-                       $"Info: {Info}\n" + 
-                       $"Strength: {Strength.ToString()}\n" + 
-                       $"Rarity: {Variations.Rarity}";
+                return $"Name: {CardData.Name}\n" +
+                       $"Category: {Category.Name}\n" +
+                       $"Faction: {CardData.Faction.Name}\n" +
+                       $"Flavor: {CardData.Flavor}\n" +
+                       $"Group: {CardData.Group.Name}\n" +
+                       $"Info: {CardData.Info}\n" +
+                       $"Strength: {CardData.Strength.ToString()}\n";
+                       //$"Rarity: {}";
             }
         }
     }
