@@ -31,9 +31,16 @@ namespace GwentSite.ApiWrapper
             string jsonReply = await reply.Content.ReadAsStringAsync();
             return Newtonsoft.Json.JsonConvert.DeserializeObject<CardData>(jsonReply);
         }
+        public async Task<IVariationDetail> GetVariationDetail(GetVariationDetailRequest request)
+        {
+            HttpResponseMessage reply = await _client.GetAsync(baseApi + pageOfCardsEndpoint + $"/{request.UUID}" + variationEndpoint);
+            CheckStatusCode(reply);
+            string jsonReply = await reply.Content.ReadAsStringAsync();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<VariationDetail>(jsonReply);
+        }
         public async Task<IArtwork> GetArtwork(GetArtworkRequest request)
         {
-
+            HttpResponseMessage reply = await _client.GetAsync()
         }
         private void CheckStatusCode(HttpResponseMessage reply)
         {

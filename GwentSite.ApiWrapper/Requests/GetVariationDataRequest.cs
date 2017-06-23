@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GwentSite.ApiWrapper.Requests
 {
-    class GetVariationDataRequest
+    public class GetVariationDetailRequest
     {
+        public string UUID { get; set; }
     }
 }

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace GwentSite.ApiWrapper.Models
 {
-    public interface IVariationDetail
+    public class ArtLevel
     {
+        public string Normal { get; set; }
+        public string Premium { get; set; }
     }
 }

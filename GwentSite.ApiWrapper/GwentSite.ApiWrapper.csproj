@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Models\ArtLevel.cs" />
     <Compile Include="Models\BasicInfo.cs" />
     <Compile Include="Models\CardData.cs" />
+    <Compile Include="Models\ImageHref.cs" />
     <Compile Include="Models\Interfaces\IBasicInfo.cs" />
     <Compile Include="Models\Interfaces\IVariation.cs" />
     <Compile Include="Models\Interfaces\IVariationDetail.cs" />
@@ -57,7 +59,6 @@
     <Compile Include="Models\Interfaces\IArtwork.cs" />
     <Compile Include="Models\Interfaces\ICardData.cs" />
     <Compile Include="Models\Interfaces\IPageOfCardData.cs" />
-    <Compile Include="Models\Interfaces\IVariationData.cs" />
     <Compile Include="Requests\GetArtworkRequest.cs" />
     <Compile Include="Requests\GetCardDataRequest.cs" />
     <Compile Include="Requests\GetPageOfCardsRequest.cs" />
