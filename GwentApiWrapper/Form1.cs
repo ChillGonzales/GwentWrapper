@@ -27,31 +27,29 @@ namespace GwentApiWrapper
         }
         private async void button1_Click(object sender, EventArgs e)
         {
+            //Pull in first 20 cards
             var client = new HttpClient();
-            System.IO.Stream returnStream = await client.GetStreamAsync(baseApi + cardEndpoint);
-            List<byte[]> bufferList = new List<byte[]>();
-            byte[] buffer = new byte[10000];
-            returnStream.Read(buffer, 0, 10000);
-            string str = "";
-            str += System.Text.Encoding.Default.GetString(buffer);
-            MessageBox.Show(str);
+            string str = await client.GetStringAsync(baseApi + cardEndpoint);
             var gwentReply = Newtonsoft.Json.JsonConvert.DeserializeObject<GwentReply>(str);
+
             foreach (var card in gwentReply.Results)
             {
                 //Get card data
                 HttpResponseMessage response = await client.GetAsync(card.Href);
                 var stringData = await response.Content.ReadAsStringAsync();
                 var gwentCardData = Newtonsoft.Json.JsonConvert.DeserializeObject<GwentCardData>(stringData);
-                //MessageBox.Show(stringData);
 
                 //Get variation data for artwork
                 HttpResponseMessage variationData = await client.GetAsync(baseApi + cardEndpoint + $"/{gwentCardData.UUID}" + $"/variations");
                 var variationStringData = await variationData.Content.ReadAsStringAsync();
-                var variationObj = Newtonsoft.Json.JsonConvert.DeserializeObject<VariationResponse>(variationStringData);
-                HttpResponseMessage imgResponse = await client.GetAsync(variationObj.Art.ThumbnailImage);
+                var variationObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<VariationResponse>>(variationStringData);
+
+                //Get artwork image from variation data
+                HttpResponseMessage imgResponse = await client.GetAsync(variationObj[0].Art.ThumbnailImage);
                 System.IO.Stream imgStream = await imgResponse.Content.ReadAsStreamAsync();
                 Image img = new Bitmap(imgStream);
 
+                //Update UI
                 this.Invoke(new Action(() =>
                 {
                     lblName.Text = gwentCardData.Name;
