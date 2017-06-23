@@ -8,5 +8,7 @@ namespace GwentSite.ApiWrapper.Requests
 {
     public class GetPageOfCardsRequest
     {
+        public int Count { get; set; }
+        public int Offset { get; set; }
     }
 }

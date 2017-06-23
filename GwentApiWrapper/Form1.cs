@@ -37,7 +37,7 @@ namespace GwentApiWrapper
                 //Get card data
                 HttpResponseMessage response = await client.GetAsync(card.Href);
                 var stringData = await response.Content.ReadAsStringAsync();
-                var gwentCardData = Newtonsoft.Json.JsonConvert.DeserializeObject<GwentCardData>(stringData);
+                var gwentCardData = Newtonsoft.Json.JsonConvert.DeserializeObject<GwentCardData>(stringData);            
 
                 //Get variation data for artwork
                 HttpResponseMessage variationData = await client.GetAsync(baseApi + cardEndpoint + $"/{gwentCardData.UUID}" + $"/variations");

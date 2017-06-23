@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GwentSite.ApiWrapper.Requests
+namespace GwentSite.ApiWrapper.Models
 {
-    public class GetCardDataRequest
+    public class Variation : IVariation
     {
         public string Href { get; set; }
+
+        public BasicInfo Rarity { get; set; }
+
+        public string Availability { get; set; }
     }
 }

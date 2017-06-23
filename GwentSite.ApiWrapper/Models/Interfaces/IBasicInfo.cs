@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace GwentSite.ApiWrapper.Models
 {
-    public interface IVariationDetail
+    public interface IBasicInfo
     {
+        string Href { get; set; }
+        string Name { get; set; }
     }
 }

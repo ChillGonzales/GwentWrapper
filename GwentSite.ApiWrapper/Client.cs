@@ -18,9 +18,29 @@ namespace GwentSite.ApiWrapper
 
         public async Task<IPageOfCardData> GetPageOfCards(GetPageOfCardsRequest request)
         {
-            HttpResponseMessage reply = await _client.GetAsync(baseApi + pageOfCardsEndpoint);
+            HttpResponseMessage reply = await _client.GetAsync(baseApi + pageOfCardsEndpoint + $"?limit={request.Count}&offset={request.Offset}");
+            CheckStatusCode(reply);
             string jsonReply = await reply.Content.ReadAsStringAsync();
-            return new PageOfCardData(jsonReply);
+            IPageOfCardData page = Newtonsoft.Json.JsonConvert.DeserializeObject<PageOfCardData>(jsonReply);
+            return page;
+        }
+        public async Task<ICardData> GetCardData(GetCardDataRequest request)
+        {
+            HttpResponseMessage reply = await _client.GetAsync(request.Href);
+            CheckStatusCode(reply);
+            string jsonReply = await reply.Content.ReadAsStringAsync();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CardData>(jsonReply);
+        }
+        public async Task<IArtwork> GetArtwork(GetArtworkRequest request)
+        {
+
+        }
+        private void CheckStatusCode(HttpResponseMessage reply)
+        {
+            if (!reply.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException($"API request threw an error code of {reply.ReasonPhrase}");
+            }
         }
     }
 }

@@ -62,11 +62,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ApiTests.cs" />
+    <Compile Include="ApiIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GwentSite.ApiWrapper\GwentSite.ApiWrapper.csproj">
+      <Project>{389db534-1471-48e5-b4e6-8f3ec17029dc}</Project>
+      <Name>GwentSite.ApiWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

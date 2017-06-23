@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GwentSite.ApiWrapper.Models
 {
-    public interface IVariationDetail
+    public class VariationDetail : IVariationDetail
     {
     }
 }

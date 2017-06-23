@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace GwentSite.ApiWrapper.Models
 {
-    public interface IPageOfCardData : IEnumerable<ICardData>
+    public interface IPageOfCardData
     {
+        int Count { get; set; }
+        string Next { get; set; }
+        List<BasicInfo> Results { get; set; }
     }
 }
