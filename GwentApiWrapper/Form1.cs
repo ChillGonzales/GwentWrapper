@@ -45,9 +45,12 @@ namespace GwentApiWrapper
                 //MessageBox.Show(stringData);
 
                 //Get variation data for artwork
-                HttpResponseMessage cardResponse = await client.GetAsync(baseApi + cardEndpoint + $"/{gwentCardData.UUID}" + $"/variations");
-                var cardStringData = await cardResponse.Content.ReadAsStringAsync();
-                MessageBox.Show(cardStringData);
+                HttpResponseMessage variationData = await client.GetAsync(baseApi + cardEndpoint + $"/{gwentCardData.UUID}" + $"/variations");
+                var variationStringData = await variationData.Content.ReadAsStringAsync();
+                var variationObj = Newtonsoft.Json.JsonConvert.DeserializeObject<VariationResponse>(variationStringData);
+                HttpResponseMessage imgResponse = await client.GetAsync(variationObj.Art.ThumbnailImage);
+                System.IO.Stream imgStream = await imgResponse.Content.ReadAsStreamAsync();
+                Image img = new Bitmap(imgStream);
 
                 this.Invoke(new Action(() =>
                 {
@@ -55,6 +58,7 @@ namespace GwentApiWrapper
                     lblFaction.Text = gwentCardData.Faction.Name;
                     lblFlavor.Text = gwentCardData.Flavor;
                     lblGroup.Text = gwentCardData.Group.Name;
+                    pictureBox2.Image = img;
                 }));
             }
         }
