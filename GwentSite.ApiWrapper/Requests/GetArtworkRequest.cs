@@ -8,5 +8,6 @@ namespace GwentSite.ApiWrapper.Requests
 {
     public class GetArtworkRequest
     {
+        public string ImageHref { get; set; }
     }
 }

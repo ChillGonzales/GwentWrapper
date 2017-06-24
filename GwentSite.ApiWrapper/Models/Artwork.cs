@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GwentSite.ApiWrapper.Models
 {
-    public interface IArtwork
+    public class Artwork : IArtwork
     {
-        System.Drawing.Image Image { get; set; }
+        public Image Image { get; set; }
     }
 }

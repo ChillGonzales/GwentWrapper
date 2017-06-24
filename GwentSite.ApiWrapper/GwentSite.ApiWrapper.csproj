@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Models\ArtLevel.cs" />
+    <Compile Include="Models\Artwork.cs" />
     <Compile Include="Models\BasicInfo.cs" />
     <Compile Include="Models\CardData.cs" />
     <Compile Include="Models\ImageHref.cs" />

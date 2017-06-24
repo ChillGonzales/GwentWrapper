@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GwentSite.ApiWrapper.Models;
 using GwentSite.ApiWrapper.Requests;
 using System.Net.Http;
+using System.Drawing;
 
 namespace GwentSite.ApiWrapper
 {
@@ -40,7 +41,13 @@ namespace GwentSite.ApiWrapper
         }
         public async Task<IArtwork> GetArtwork(GetArtworkRequest request)
         {
-            HttpResponseMessage reply = await _client.GetAsync()
+            HttpResponseMessage reply = await _client.GetAsync(request.ImageHref);
+            System.IO.Stream imgStream = await reply.Content.ReadAsStreamAsync();
+            Artwork img = new Artwork()
+            {
+                Image = new Bitmap(imgStream)
+            };
+            return img;
         }
         private void CheckStatusCode(HttpResponseMessage reply)
         {
