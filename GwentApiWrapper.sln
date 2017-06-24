@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GwentSite.Tests", "GwentSit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GwentSite.WebUI", "GwentSite.WebUI\GwentSite.WebUI.csproj", "{6D855DD3-4776-4AF5-B3FA-225E969C7BB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GwentSite.AndroidUI", "GwentSite.AndroidUI\GwentSite.AndroidUI.csproj", "{FE54A0BC-0A39-44AD-85B6-FC66ACE556E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,12 @@ Global
 		{6D855DD3-4776-4AF5-B3FA-225E969C7BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D855DD3-4776-4AF5-B3FA-225E969C7BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D855DD3-4776-4AF5-B3FA-225E969C7BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE54A0BC-0A39-44AD-85B6-FC66ACE556E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE54A0BC-0A39-44AD-85B6-FC66ACE556E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE54A0BC-0A39-44AD-85B6-FC66ACE556E9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FE54A0BC-0A39-44AD-85B6-FC66ACE556E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE54A0BC-0A39-44AD-85B6-FC66ACE556E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE54A0BC-0A39-44AD-85B6-FC66ACE556E9}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

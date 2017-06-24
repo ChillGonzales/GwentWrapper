@@ -15,6 +15,5 @@ namespace GwentSite.ApiWrapper.Models
         public ArtLevel Mill { get; set; }
         public BasicInfo Rarity { get; set; }
         public string UUID { get; set; }
-
     }
 }

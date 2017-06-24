@@ -8,6 +8,6 @@ namespace GwentSite.ApiWrapper.Models
 {
     public interface IArtwork
     {
-        System.Drawing.Image Image { get; set; }
+        System.IO.Stream ImageStream { get; set; }
     }
 }

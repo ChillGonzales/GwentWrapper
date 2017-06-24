@@ -42,12 +42,12 @@ namespace GwentSite.ApiWrapper
         public async Task<IArtwork> GetArtwork(GetArtworkRequest request)
         {
             HttpResponseMessage reply = await _client.GetAsync(request.ImageHref);
+            CheckStatusCode(reply);
             System.IO.Stream imgStream = await reply.Content.ReadAsStreamAsync();
-            Artwork img = new Artwork()
+            return new Artwork()
             {
-                Image = new Bitmap(imgStream)
+                ImageStream = imgStream
             };
-            return img;
         }
         private void CheckStatusCode(HttpResponseMessage reply)
         {

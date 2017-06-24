@@ -9,6 +9,6 @@ namespace GwentSite.ApiWrapper.Models
 {
     public class Artwork : IArtwork
     {
-        public Image Image { get; set; }
+        public System.IO.Stream ImageStream { get; set; }
     }
 }
