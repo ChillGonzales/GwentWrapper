@@ -7,6 +7,9 @@ using GwentSite.ApiWrapper.Models;
 using GwentSite.ApiWrapper.Requests;
 using System.Net.Http;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
+using System.Net;
 
 namespace GwentSite.ApiWrapper
 {
@@ -17,21 +20,27 @@ namespace GwentSite.ApiWrapper
         private const string variationEndpoint = "/variations";
         private static System.Net.Http.HttpClient _client;
 
-        public Client(HttpClient client)
-        {
-            _client = client;
-        }
+        //public Client(HttpClient client)
+        //{
+        //    _client = client;
+        //    ServicePointManager.ServerCertificateValidationCallback = Validator;
+        //}
         public Client()
         {
-            _client = new HttpClient();
+            _client = new HttpClient(new ModernHttpClient.NativeMessageHandler());
+            ServicePointManager.ServerCertificateValidationCallback = Validator;
         }
         public async Task<IPageOfCardData> GetPageOfCards(GetPageOfCardsRequest request)
         {
-            HttpResponseMessage reply = await _client.GetAsync(baseApi + pageOfCardsEndpoint + $"?limit={request.Count}&offset={request.Offset}");
-            CheckStatusCode(reply);
-            string jsonReply = await reply.Content.ReadAsStringAsync();
-            IPageOfCardData page = Newtonsoft.Json.JsonConvert.DeserializeObject<PageOfCardData>(jsonReply);
-            return page;
+            try
+            {
+                HttpResponseMessage reply = await _client.GetAsync(baseApi + pageOfCardsEndpoint + $"?limit={request.Count}&offset={request.Offset}");
+                CheckStatusCode(reply);
+                string jsonReply = await reply.Content.ReadAsStringAsync();
+                IPageOfCardData page = Newtonsoft.Json.JsonConvert.DeserializeObject<PageOfCardData>(jsonReply);
+                return page;
+            }
+            catch (Exception ex) { return null; }
         }
         public async Task<ICardData> GetCardData(GetCardDataRequest request)
         {
@@ -63,6 +72,12 @@ namespace GwentSite.ApiWrapper
             {
                 throw new InvalidOperationException($"API request threw an error code of {reply.ReasonPhrase}");
             }
+        }
+        private static bool Validator(object sender, X509Certificate certificate, X509Chain chain,
+                                      SslPolicyErrors sslPolicyErrors)
+        {
+            //TODO: Refactor this shit, don't just trust all endpoints
+            return true;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace GwentSite.AndroidUI
         {
             if (_apiInstance == null)
             {
-                _apiInstance = new Client(new System.Net.Http.HttpClient(new NativeMessageHandler()));
+                _apiInstance = new Client();
             }
             return _apiInstance;
         }
