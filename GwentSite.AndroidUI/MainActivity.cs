@@ -19,30 +19,37 @@ namespace GwentSite.AndroidUI
             var gridView = FindViewById<GridView>(Resource.Id.gridView1);
             var imgAdapter = new ImageAdapter(this);
             var apiClient = ApiFactory.GetInstance();
-            List<System.IO.Stream> streams = new List<System.IO.Stream>();
-            var pages = await apiClient.GetPageOfCards(new ApiWrapper.Requests.GetPageOfCardsRequest()
+            try
             {
-                Count = 40,
-                Offset = 0
-            });
-            foreach (var card in pages.Results)
-            {
-                var cardData = await apiClient.GetCardData(new ApiWrapper.Requests.GetCardDataRequest()
+                List<System.IO.Stream> streams = new List<System.IO.Stream>();
+                var pages = await apiClient.GetPageOfCards(new ApiWrapper.Requests.GetPageOfCardsRequest()
                 {
-                    Href = card.Href
+                    Count = 40,
+                    Offset = 0
                 });
-                var varData = await apiClient.GetVariationDetail(new ApiWrapper.Requests.GetVariationDetailRequest()
+                foreach (var card in pages.Results)
                 {
-                    UUID = cardData.UUID
-                });
-                var artwork = await apiClient.GetArtwork(new ApiWrapper.Requests.GetArtworkRequest()
-                {
-                    ImageHref = varData.Art.ThumbnailImage
-                });
-                streams.Add(artwork.ImageStream);
+                    var cardData = await apiClient.GetCardData(new ApiWrapper.Requests.GetCardDataRequest()
+                    {
+                        Href = card.Href
+                    });
+                    var varData = await apiClient.GetVariationDetail(new ApiWrapper.Requests.GetVariationDetailRequest()
+                    {
+                        UUID = cardData.UUID
+                    });
+                    var artwork = await apiClient.GetArtwork(new ApiWrapper.Requests.GetArtworkRequest()
+                    {
+                        ImageHref = varData.Art.ThumbnailImage
+                    });
+                    streams.Add(artwork.ImageStream);
+                }
+                imgAdapter.LoadImages(streams);
+                gridView.Adapter = imgAdapter;
             }
-            imgAdapter.LoadImages(streams);
-            gridView.Adapter = imgAdapter;
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

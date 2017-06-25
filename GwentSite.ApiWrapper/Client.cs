@@ -15,8 +15,16 @@ namespace GwentSite.ApiWrapper
         private const string baseApi = "https://api.gwentapi.com/v0";
         private const string pageOfCardsEndpoint = "/cards";
         private const string variationEndpoint = "/variations";
-        private static System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
+        private static System.Net.Http.HttpClient _client;
 
+        public Client(HttpClient client)
+        {
+            _client = client;
+        }
+        public Client()
+        {
+            _client = new HttpClient();
+        }
         public async Task<IPageOfCardData> GetPageOfCards(GetPageOfCardsRequest request)
         {
             HttpResponseMessage reply = await _client.GetAsync(baseApi + pageOfCardsEndpoint + $"?limit={request.Count}&offset={request.Offset}");

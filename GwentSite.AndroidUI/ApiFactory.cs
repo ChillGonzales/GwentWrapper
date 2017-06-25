@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using ModernHttpClient;
 
 namespace GwentSite.AndroidUI
 {
@@ -20,7 +21,7 @@ namespace GwentSite.AndroidUI
         {
             if (_apiInstance == null)
             {
-                _apiInstance = new Client();
+                _apiInstance = new Client(new System.Net.Http.HttpClient(new NativeMessageHandler()));
             }
             return _apiInstance;
         }

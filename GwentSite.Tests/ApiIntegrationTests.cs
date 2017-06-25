@@ -3,13 +3,14 @@ using NUnit.Framework;
 using Moq;
 using GwentSite.ApiWrapper;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace GwentSite.Tests
 {
     [TestFixture]
     public class ApiIntegrationTests
     {
-        private static Client client = new Client();
+        private static Client client = new Client(new HttpClient());
         private const string aRushHref = "https://api.gwentapi.com/v0/cards/rLuBBJg8QB2c_tyfktLnbQ";
 
         [Test]
