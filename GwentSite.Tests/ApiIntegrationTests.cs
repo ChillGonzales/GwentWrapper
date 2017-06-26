@@ -10,7 +10,7 @@ namespace GwentSite.Tests
     [TestFixture]
     public class ApiIntegrationTests
     {
-        private static Client client = new Client(new HttpClient());
+        private static Client client = new Client();
         private const string aRushHref = "https://api.gwentapi.com/v0/cards/rLuBBJg8QB2c_tyfktLnbQ";
 
         [Test]

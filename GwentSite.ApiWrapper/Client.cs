@@ -13,7 +13,7 @@ using System.Net;
 
 namespace GwentSite.ApiWrapper
 {
-    public class Client
+    public class Client : IClient
     {
         private const string baseApi = "https://api.gwentapi.com/v0";
         private const string pageOfCardsEndpoint = "/cards";
@@ -54,7 +54,7 @@ namespace GwentSite.ApiWrapper
             HttpResponseMessage reply = await _client.GetAsync(baseApi + pageOfCardsEndpoint + $"/{request.UUID}" + variationEndpoint);
             CheckStatusCode(reply);
             string jsonReply = await reply.Content.ReadAsStringAsync();
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<VariationDetail>(jsonReply);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<VariationDetail>>(jsonReply)[0];
         }
         public async Task<IArtwork> GetArtwork(GetArtworkRequest request)
         {
@@ -63,8 +63,30 @@ namespace GwentSite.ApiWrapper
             System.IO.Stream imgStream = await reply.Content.ReadAsStreamAsync();
             return new Artwork()
             {
-                ImageStream = imgStream
+                Image = new Bitmap(imgStream)
             };
+        }
+        public async Task<List<IArtwork>> GetArtworkList(GetArtworkListRequest request)
+        {
+            var retList = new List<IArtwork>();
+            foreach (var cardInfo in request.CardHrefs)
+            {
+                var cardData = await this.GetCardData(new GetCardDataRequest()
+                {
+                    Href = cardInfo.Href
+                });
+                var varDetail = await this.GetVariationDetail(new GetVariationDetailRequest()
+                {
+                    UUID = cardData.UUID
+                });
+                var artwork = await this.GetArtwork(new GetArtworkRequest()
+                {
+                    ImageHref = varDetail.Art.ThumbnailImage
+                });
+                artwork.Name = cardInfo.Name;
+                retList.Add(artwork);
+            }
+            return retList;
         }
         private void CheckStatusCode(HttpResponseMessage reply)
         {
